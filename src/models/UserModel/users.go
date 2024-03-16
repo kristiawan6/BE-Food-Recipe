@@ -8,13 +8,13 @@ import (
 
 type User struct {
 	gorm.Model
-	Name              string
-	Email             string
-	Password          string
-	Picture           string
-	Phonenumber       string
-	Role              string
-	Verificationcode string
+	Name             string
+	Email            string
+	Password         string
+	Picture          string
+	PhoneNumber      string
+	Role             string
+	VerificationCode string
 }
 
 func SelectAllUser() []*User {
