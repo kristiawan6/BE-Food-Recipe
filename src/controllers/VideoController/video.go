@@ -1,7 +1,7 @@
-package recipecontroller
+package videocontroller
 
 import (
-	models "be_food_recipe/src/models/RecipeModel"
+	models "be_food_recipe/src/models/VideoModel"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -9,9 +9,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetAllRecipes(c *fiber.Ctx) error {
-	recipes := models.SelectAllRecipe()
-	res, err := json.Marshal(recipes)
+func GetAllVideo(c *fiber.Ctx) error {
+	video := models.SelectAllVideo()
+	res, err := json.Marshal(video)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).SendString("Gagal Konversi Json")
 	}
@@ -23,74 +23,72 @@ func GetAllRecipes(c *fiber.Ctx) error {
 	})
 }
 
-func GetRecipesById(c *fiber.Ctx) error {
+func GetVideoById(c *fiber.Ctx) error {
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
-	res := models.SelectRecipeById(strconv.Itoa(id))
+	res := models.SelectVideoById(strconv.Itoa(id))
 	return c.JSON(fiber.Map{
 		"Message": "Success",
 		"data":    res,
 	})
 }
 
-func PostRecipe(c *fiber.Ctx) error {
+func PostVideo(c *fiber.Ctx) error {
 	if c.Method() == fiber.MethodPost {
-		var recipe models.Recipe
-		if err := c.BodyParser(&recipe); err != nil {
+		var Video models.Video
+		if err := c.BodyParser(&Video); err != nil {
 			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
-		item := models.Recipe{
-			Title:      recipe.Title,
-			Ingredient: recipe.Ingredient,
-			Thumbnail:  recipe.Thumbnail,
-			Category:   recipe.Category,
-			UserId:     recipe.UserId,
+		item := models.Video{
+			Title:     Video.Title,
+			Url:       Video.Url,
+			Thumbnail: Video.Thumbnail,
+			RecipeId:  Video.RecipeId,
 		}
-		models.PostRecipe(&item)
+		models.PostVideo(&item)
 
 		return c.JSON(fiber.Map{
-			"Message": "Recipe Posted",
+			"Message": "Video Posted",
 		})
 	} else {
 		return c.Status(fiber.StatusMethodNotAllowed).SendString("Method tidak diizinkan")
 	}
 }
 
-func UpdateRecipe(c *fiber.Ctx) error {
+func UpdateVideo(c *fiber.Ctx) error {
 
 	if c.Method() == fiber.MethodPut {
 		idParam := c.Params("id")
 		id, _ := strconv.Atoi(idParam)
-		var recipe models.Recipe
-		if err := c.BodyParser(&recipe); err != nil {
+		var Video models.Video
+		if err := c.BodyParser(&Video); err != nil {
 			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
-		newRecipe := models.Recipe{
-			Title:      recipe.Title,
-			Ingredient: recipe.Ingredient,
-			Thumbnail:  recipe.Thumbnail,
-			Category:   recipe.Category,
-			UserId:     recipe.UserId,
+		newVideo := models.Video{
+			Title:     Video.Title,
+			Url:       Video.Url,
+			Thumbnail: Video.Thumbnail,
+			RecipeId:  Video.RecipeId,
 		}
-		models.UpdateRecipe(id, &newRecipe)
+		models.UpdateVideo(id, &newVideo)
 
 		return c.JSON(fiber.Map{
-			"Message": "Recipe Updated",
+			"Message": "Video Updated",
 		})
 	} else {
 		return c.Status(fiber.StatusMethodNotAllowed).SendString("Method tidak diizinkan")
 	}
 }
 
-func DeleteRecipe(c *fiber.Ctx) error {
+func DeleteVideo(c *fiber.Ctx) error {
 
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
-	models.DeleteRecipe(id)
+	models.DeleteVideo(id)
 
 	return c.JSON(fiber.Map{
-		"Message": "Recipe Deleted",
+		"Message": "Video Deleted",
 	})
 
 }

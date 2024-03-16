@@ -43,8 +43,8 @@ func PostUser(c *fiber.Ctx) error {
 			Password:         user.Password,
 			Picture:          user.Picture,
 			PhoneNumber:      user.PhoneNumber,
-			Role:             user.Role,
-			VerificationCode: user.VerificationCode,
+			Role:             "User",
+			VerificationCode: "-",
 		}
 		models.PostUser(&item)
 
