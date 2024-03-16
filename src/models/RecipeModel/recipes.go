@@ -8,7 +8,7 @@ import (
 
 type Recipe struct {
 	gorm.Model
-	title              string
+	title string
 }
 
 func SelectAllRecipe() []*Recipe {
