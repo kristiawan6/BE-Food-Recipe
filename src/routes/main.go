@@ -29,7 +29,6 @@ func Router(c *fiber.App) {
 	{
 		user.Get("/data", usercontroller.GetAllUsers)
 		user.Get("/:id", usercontroller.GetUserById)
-		// user.Get("/paginated-data", usercontroller)
 		user.Put("/update/:id", usercontroller.UpdateUser)
 		user.Delete("/delete/:id", usercontroller.DeleteUser)
 	}
