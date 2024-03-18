@@ -1,7 +1,7 @@
-package bookmarkercontroller
+package commentcontroller
 
 import (
-	models "be_food_recipe/src/models/BookmarkerModel"
+	models "be_food_recipe/src/models/CommentModel"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -9,9 +9,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetAllBookmark(c *fiber.Ctx) error {
-	bookmark := models.SelectAllBookmarker()
-	res, err := json.Marshal(bookmark)
+func GetAllComment(c *fiber.Ctx) error {
+	comment := models.SelectAllComment()
+	res, err := json.Marshal(comment)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).SendString("Gagal Konversi Json")
 	}
@@ -23,68 +23,68 @@ func GetAllBookmark(c *fiber.Ctx) error {
 	})
 }
 
-func GetBookmarkById(c *fiber.Ctx) error {
+func GetCommentById(c *fiber.Ctx) error {
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
-	res := models.SelectBookmarkerById(strconv.Itoa(id))
+	res := models.SelectCommentById(strconv.Itoa(id))
 	return c.JSON(fiber.Map{
 		"Message": "Success",
 		"data":    res,
 	})
 }
 
-func PostBookmark(c *fiber.Ctx) error {
+func PostComment(c *fiber.Ctx) error {
 	if c.Method() == fiber.MethodPost {
-		var Bookmarker models.Bookmarker
-		if err := c.BodyParser(&Bookmarker); err != nil {
+		var comment models.Comment
+		if err := c.BodyParser(&comment); err != nil {
 			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 
-		item := models.Bookmarker{
-			UserId:   Bookmarker.UserId,
-			RecipeId: Bookmarker.RecipeId,
+		item := models.Comment{
+			UserId:   comment.UserId,
+			RecipeId: comment.RecipeId,
 		}
-		models.PostBookmarker(&item)
+		models.PostComment(&item)
 
 		return c.JSON(fiber.Map{
-			"Message": "Bookmark Posted",
+			"Message": "Comment Posted",
 		})
 	} else {
 		return c.Status(fiber.StatusMethodNotAllowed).SendString("Method tidak diizinkan")
 	}
 }
 
-func UpdateBookmark(c *fiber.Ctx) error {
+func UpdateComment(c *fiber.Ctx) error {
 
 	if c.Method() == fiber.MethodPut {
 		idParam := c.Params("id")
 		id, _ := strconv.Atoi(idParam)
-		var Bookmarker models.Bookmarker
-		if err := c.BodyParser(&Bookmarker); err != nil {
+		var comment models.Comment
+		if err := c.BodyParser(&comment); err != nil {
 			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
-		newBookmark := models.Bookmarker{
-			UserId:   Bookmarker.UserId,
-			RecipeId: Bookmarker.RecipeId,
+		newComment := models.Comment{
+			UserId:   comment.UserId,
+			RecipeId: comment.RecipeId,
 		}
-		models.UpdateBookmarker(id, &newBookmark)
+		models.UpdateComment(id, &newComment)
 
 		return c.JSON(fiber.Map{
-			"Message": "Bookmark Updated",
+			"Message": "Comment Updated",
 		})
 	} else {
 		return c.Status(fiber.StatusMethodNotAllowed).SendString("Method tidak diizinkan")
 	}
 }
 
-func DeleteBookmark(c *fiber.Ctx) error {
+func DeleteComment(c *fiber.Ctx) error {
 
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
-	models.DeleteBookmarker(id)
+	models.DeleteComment(id)
 
 	return c.JSON(fiber.Map{
-		"Message": "Bookmark Deleted",
+		"Message": "Comment Deleted",
 	})
 
 }

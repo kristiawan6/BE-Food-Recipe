@@ -46,6 +46,22 @@ func DeleteUser(id int) error {
 	return result.Error
 }
 
+func FindEmail(email string) (User, error) {
+    var item User
+    if err := config.DB.Where("email = ?", email).First(&item).Error; err != nil {
+        return item, err
+    }
+    return item, nil
+}
+
+func FindRole(email string) (string, error) {
+    user, err := FindEmail(email)
+    if err != nil {
+        return "", err
+    }
+    return user.Role, nil
+}
+
 func FindData(keyword string) []*User {
 	var items []*User
 	keyword = "%" + keyword + "%"
