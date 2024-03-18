@@ -105,7 +105,13 @@ func Login(c *fiber.Ctx) error {
 
 func GetAllUsers(c *fiber.Ctx) error {
 	users := models.SelectAllUser()
-	res, err := json.Marshal(users)
+
+	response := fiber.Map{
+		"Message": "Success",
+		"data":    users,
+	}
+	
+	res, err := json.Marshal(response)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString("Gagal Konversi Json")
 	}

@@ -9,9 +9,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetAllComment(c *fiber.Ctx) error {
-	comment := models.SelectAllComment()
-	res, err := json.Marshal(comment)
+func GetAllComments(c *fiber.Ctx) error {
+	comments := models.SelectAllComment()
+	res, err := json.Marshal(comments)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).SendString("Gagal Konversi Json")
 	}

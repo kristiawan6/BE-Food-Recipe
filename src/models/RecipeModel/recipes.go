@@ -12,8 +12,8 @@ type Recipe struct {
 	Ingredient string
 	Thumbnail  string
 	Category   string
-	Comment    string
-	UserId     string
+	CommentId  uint
+	UserId     uint
 }
 
 func SelectAllRecipe() []*Recipe {

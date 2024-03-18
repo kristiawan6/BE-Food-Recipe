@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetAllSaved(c *fiber.Ctx) error {
+func GetAllSaveds(c *fiber.Ctx) error {
 	saved := models.SelectAllSaved()
 	res, err := json.Marshal(saved)
 	if err != nil {

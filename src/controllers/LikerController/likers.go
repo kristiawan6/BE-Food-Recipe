@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetAllLiker(c *fiber.Ctx) error {
+func GetAllLikers(c *fiber.Ctx) error {
 	liker := models.SelectAllLiker()
 	res, err := json.Marshal(liker)
 	if err != nil {

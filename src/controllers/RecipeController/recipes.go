@@ -11,19 +11,22 @@ import (
 
 func GetAllRecipes(c *fiber.Ctx) error {
 	recipes := models.SelectAllRecipe()
-	res, err := json.Marshal(recipes)
+
+	response := fiber.Map{
+		"Message": "Success",
+		"data":    recipes,
+	}
+
+	res, err := json.Marshal(response)
 	if err != nil {
-		return c.Status(http.StatusInternalServerError).SendString("Gagal Konversi Json")
+		return c.Status(http.StatusInternalServerError).SendString("Failed to convert to JSON")
 	}
 
 	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
-	return c.JSON(fiber.Map{
-		"Message": "Success",
-		"data":    res,
-	})
+	return c.Send(res)
 }
 
-func GetRecipesById(c *fiber.Ctx) error {
+func GetRecipeById(c *fiber.Ctx) error {
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
 	res := models.SelectRecipeById(strconv.Itoa(id))

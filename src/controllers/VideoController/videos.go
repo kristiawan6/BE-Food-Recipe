@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetAllVideo(c *fiber.Ctx) error {
+func GetAllVideos(c *fiber.Ctx) error {
 	video := models.SelectAllVideo()
 	res, err := json.Marshal(video)
 	if err != nil {
