@@ -11,16 +11,19 @@ import (
 
 func GetAllComments(c *fiber.Ctx) error {
 	comments := models.SelectAllComment()
-	res, err := json.Marshal(comments)
+
+	response := fiber.Map{
+		"Message": "Success",
+		"data":    comments,
+	}
+
+	res, err := json.Marshal(response)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).SendString("Gagal Konversi Json")
 	}
 
 	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
-	return c.JSON(fiber.Map{
-		"Message": "Success",
-		"data":    res,
-	})
+	return c.Send(res)
 }
 
 func GetCommentById(c *fiber.Ctx) error {

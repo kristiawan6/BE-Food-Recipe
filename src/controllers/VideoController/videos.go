@@ -11,16 +11,19 @@ import (
 
 func GetAllVideos(c *fiber.Ctx) error {
 	video := models.SelectAllVideo()
-	res, err := json.Marshal(video)
+
+	response := fiber.Map{
+		"Message": "Success",
+		"data":    video,
+	}
+
+	res, err := json.Marshal(response)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).SendString("Gagal Konversi Json")
 	}
 
 	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
-	return c.JSON(fiber.Map{
-		"Message": "Success",
-		"data":    res,
-	})
+	return c.Send(res)
 }
 
 func GetVideoById(c *fiber.Ctx) error {
