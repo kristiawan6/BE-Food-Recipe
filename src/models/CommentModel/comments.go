@@ -9,8 +9,8 @@ import (
 type Comment struct {
 	gorm.Model
 	Text     string
-	UserId   string
-	RecipeId string
+	UserId   uint
+	RecipeId uint
 }
 
 func SelectAllComment() []*Comment {
