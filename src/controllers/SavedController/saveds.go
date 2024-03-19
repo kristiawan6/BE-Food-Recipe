@@ -11,16 +11,19 @@ import (
 
 func GetAllSaveds(c *fiber.Ctx) error {
 	saved := models.SelectAllSaved()
-	res, err := json.Marshal(saved)
+
+	response := fiber.Map{
+		"Message": "Success",
+		"data":    saved,
+	}
+
+	res, err := json.Marshal(response)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).SendString("Gagal Konversi Json")
 	}
 
 	c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
-	return c.JSON(fiber.Map{
-		"Message": "Success",
-		"data":    res,
-	})
+	return c.Send(res)
 }
 
 func GetSavedById(c *fiber.Ctx) error {

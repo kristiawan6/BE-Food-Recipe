@@ -110,7 +110,7 @@ func GetAllUsers(c *fiber.Ctx) error {
 		"Message": "Success",
 		"data":    users,
 	}
-	
+
 	res, err := json.Marshal(response)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString("Gagal Konversi Json")
