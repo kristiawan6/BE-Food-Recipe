@@ -48,6 +48,7 @@ func PostComment(c *fiber.Ctx) error {
 		}
 
 		item := models.Comment{
+			Text:     comment.Text,
 			UserId:   comment.UserId,
 			RecipeId: comment.RecipeId,
 		}
