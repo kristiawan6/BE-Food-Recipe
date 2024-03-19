@@ -12,7 +12,6 @@ type Recipe struct {
 	Ingredient string
 	Thumbnail  string
 	Category   string
-	CommentId  uint
 	UserId     uint
 }
 
