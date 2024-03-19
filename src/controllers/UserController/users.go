@@ -12,6 +12,7 @@ import (
 )
 
 func RegisterAdmin(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	if c.Method() == fiber.MethodPost {
 		var user models.User
 		if err := c.BodyParser(&user); err != nil {
@@ -41,6 +42,7 @@ func RegisterAdmin(c *fiber.Ctx) error {
 }
 
 func RegisterUser(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	if c.Method() == fiber.MethodPost {
 		var user models.User
 		if err := c.BodyParser(&user); err != nil {
@@ -70,6 +72,7 @@ func RegisterUser(c *fiber.Ctx) error {
 }
 
 func Login(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	if c.Method() == fiber.MethodPost {
 		var user models.User
 		if err := c.BodyParser(&user); err != nil {
@@ -104,6 +107,7 @@ func Login(c *fiber.Ctx) error {
 }
 
 func GetAllUsers(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	users := models.SelectAllUser()
 
 	response := fiber.Map{
@@ -120,6 +124,7 @@ func GetAllUsers(c *fiber.Ctx) error {
 }
 
 func GetUserById(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
 	res := models.SelectUserById(strconv.Itoa(id))
@@ -130,6 +135,7 @@ func GetUserById(c *fiber.Ctx) error {
 }
 
 func UpdateUser(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	if c.Method() == fiber.MethodPut {
 		idParam := c.Params("id")
 		id, _ := strconv.Atoi(idParam)
@@ -159,6 +165,7 @@ func UpdateUser(c *fiber.Ctx) error {
 }
 
 func DeleteUser(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
 	models.DeleteUser(id)

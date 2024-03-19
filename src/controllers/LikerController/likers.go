@@ -1,6 +1,7 @@
 package likercontroller
 
 import (
+	"be_food_recipe/src/helper"
 	models "be_food_recipe/src/models/LikerModel"
 	"encoding/json"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 )
 
 func GetAllLikers(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	liker := models.SelectAllLiker()
 
 	response := fiber.Map{
@@ -26,6 +28,7 @@ func GetAllLikers(c *fiber.Ctx) error {
 }
 
 func GetLikerById(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
 	res := models.SelectLikerById(strconv.Itoa(id))
@@ -36,6 +39,7 @@ func GetLikerById(c *fiber.Ctx) error {
 }
 
 func PostLiker(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	if c.Method() == fiber.MethodPost {
 		var liker models.Liker
 		if err := c.BodyParser(&liker); err != nil {
@@ -57,7 +61,7 @@ func PostLiker(c *fiber.Ctx) error {
 }
 
 func UpdateLiker(c *fiber.Ctx) error {
-
+	helper.EnableCors(c)
 	if c.Method() == fiber.MethodPut {
 		idParam := c.Params("id")
 		id, _ := strconv.Atoi(idParam)
@@ -80,7 +84,7 @@ func UpdateLiker(c *fiber.Ctx) error {
 }
 
 func DeleteLiker(c *fiber.Ctx) error {
-
+	helper.EnableCors(c)
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
 	models.DeleteLiker(id)
