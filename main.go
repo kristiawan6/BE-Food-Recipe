@@ -6,17 +6,18 @@ import (
 	"be_food_recipe/src/routes"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/joho/godotenv"
-	"log"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
 
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowMethods: "GET,POST,PUT,DELETE,OPTIONS",
+		AllowHeaders: "Content-Type",
+	}))
 
 	config.InitDB()
 	helper.Migration()
