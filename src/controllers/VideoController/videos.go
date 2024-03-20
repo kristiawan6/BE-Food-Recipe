@@ -1,6 +1,7 @@
 package videocontroller
 
 import (
+	"be_food_recipe/src/helper"
 	models "be_food_recipe/src/models/VideoModel"
 	"encoding/json"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 )
 
 func GetAllVideos(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	video := models.SelectAllVideo()
 
 	response := fiber.Map{
@@ -27,6 +29,7 @@ func GetAllVideos(c *fiber.Ctx) error {
 }
 
 func GetVideoById(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
 	res := models.SelectVideoById(strconv.Itoa(id))
@@ -37,6 +40,7 @@ func GetVideoById(c *fiber.Ctx) error {
 }
 
 func PostVideo(c *fiber.Ctx) error {
+	helper.EnableCors(c)
 	if c.Method() == fiber.MethodPost {
 		var Video models.Video
 		if err := c.BodyParser(&Video); err != nil {
@@ -60,7 +64,7 @@ func PostVideo(c *fiber.Ctx) error {
 }
 
 func UpdateVideo(c *fiber.Ctx) error {
-
+	helper.EnableCors(c)
 	if c.Method() == fiber.MethodPut {
 		idParam := c.Params("id")
 		id, _ := strconv.Atoi(idParam)
@@ -85,7 +89,7 @@ func UpdateVideo(c *fiber.Ctx) error {
 }
 
 func DeleteVideo(c *fiber.Ctx) error {
-
+	helper.EnableCors(c)
 	idParam := c.Params("id")
 	id, _ := strconv.Atoi(idParam)
 	models.DeleteVideo(id)

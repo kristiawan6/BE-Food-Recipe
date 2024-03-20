@@ -11,7 +11,7 @@ type Recipe struct {
 	Title      string
 	Ingredient string
 	Thumbnail  string
-	Category   string
+	VideoUrl   string
 	UserId     uint
 }
 
