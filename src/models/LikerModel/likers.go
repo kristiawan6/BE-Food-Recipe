@@ -8,8 +8,8 @@ import (
 
 type Liker struct {
 	gorm.Model
-	UserId   string
-	RecipeId string
+	UserId   uint
+	RecipeId uint
 }
 
 func SelectAllLiker() []*Liker {
