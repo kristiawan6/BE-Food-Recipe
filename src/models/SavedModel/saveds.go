@@ -8,8 +8,8 @@ import (
 
 type Saved struct {
 	gorm.Model
-	UserId   string
-	RecipeId string
+	UserId   uint
+	RecipeId uint
 }
 
 func SelectAllSaved() []*Saved {

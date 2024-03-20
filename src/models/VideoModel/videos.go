@@ -11,7 +11,7 @@ type Video struct {
 	Title            string
 	Url              string
 	Thumbnail        string
-	RecipeId         string
+	RecipeId         uint
 }
 
 func SelectAllVideo() []*Video {
