@@ -9,12 +9,29 @@ import (
 type Liker struct {
 	gorm.Model
 	UserId   uint
+	User     User
 	RecipeId uint
+	Recipe   Recipe
+}
+
+type User struct {
+	gorm.Model
+	Name  string
+	Email string
+	Role  string
+}
+
+type Recipe struct {
+	gorm.Model
+	Title      string
+	Ingredient string
+	Thumbnail  string
+	VideoUrl   string
 }
 
 func SelectAllLiker() []*Liker {
 	var items []*Liker
-	config.DB.Find(&items)
+	config.DB.Preload("User").Preload("Recipe").Find(&items)
 	return items
 }
 

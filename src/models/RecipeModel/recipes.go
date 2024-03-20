@@ -13,11 +13,19 @@ type Recipe struct {
 	Thumbnail  string
 	VideoUrl   string
 	UserId     uint
+	User       User
+}
+
+type User struct {
+	gorm.Model
+	Name  string
+	Email string
+	Role  string
 }
 
 func SelectAllRecipe() []*Recipe {
 	var items []*Recipe
-	config.DB.Find(&items)
+	config.DB.Preload("User").Find(&items)
 	return items
 }
 

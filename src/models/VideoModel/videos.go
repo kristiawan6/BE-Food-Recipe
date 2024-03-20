@@ -8,15 +8,24 @@ import (
 
 type Video struct {
 	gorm.Model
-	Title            string
-	Url              string
-	Thumbnail        string
-	RecipeId         uint
+	Title     string
+	Url       string
+	Thumbnail string
+	RecipeId  uint
+	Recipe    Recipe
+}
+
+type Recipe struct {
+	gorm.Model
+	Title      string
+	Ingredient string
+	Thumbnail  string
+	VideoUrl   string
 }
 
 func SelectAllVideo() []*Video {
 	var items []*Video
-	config.DB.Find(&items)
+	config.DB.Preload("Recipe").Find(&items)
 	return items
 }
 
